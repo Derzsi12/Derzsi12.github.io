@@ -1,32 +1,33 @@
 {
     "metadata": {
-        "source": "Economics Observatory & Transfermarkt",
-        "last_updated": "2026-01-20 17:32:40"
+        "title": "Big 6 Head-to-Head Mini League",
+        "source": "fixtures.csv (Direct Analysis)",
+        "last_updated": "2026-01-20 21:48:06"
     },
-    "efficiency_data": [
+    "minileague": [
         {
-            "team": "Man City",
-            "cost_per_point": 1.49
+            "team": "Liverpool",
+            "points": 21
         },
         {
             "team": "Arsenal",
-            "cost_per_point": 3.17
-        },
-        {
-            "team": "Liverpool",
-            "cost_per_point": 3.2
-        },
-        {
-            "team": "Tottenham",
-            "cost_per_point": 2.54
+            "points": 20
         },
         {
             "team": "Chelsea",
-            "cost_per_point": 5.1
+            "points": 14
         },
         {
-            "team": "Man Utd",
-            "cost_per_point": 4.16
+            "team": "Manchester City",
+            "points": 11
+        },
+        {
+            "team": "Tottenham",
+            "points": 9
+        },
+        {
+            "team": "Manchester Utd",
+            "points": 7
         }
     ]
 }

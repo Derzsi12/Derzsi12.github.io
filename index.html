@@ -229,58 +229,23 @@
       options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#e5e7eb' } }, y: { ticks: { color: '#e5e7eb' } } } }
     });
 
-    // --- Chart 4: Live API (GBP/EUR) ---
-   // --- Chart 4: Brand Popularity (Wikipedia Live API) ---
-    async function initBrandInterestAPI() {
-      const teams = [
-        { name: 'Arsenal', wiki: 'Arsenal_F.C.' },
-        { name: 'Man City', wiki: 'Manchester_City_F.C.' },
-        { name: 'Liverpool', wiki: 'Liverpool_F.C.' },
-        { name: 'Man Utd', wiki: 'Manchester_United_F.C.' },
-        { name: 'Chelsea', wiki: 'Chelsea_F.C.' },
-        { name: 'Tottenham', wiki: 'Tottenham_Hotspur_F.C.' }
-      ];
-
-      // Dátum beállítása: 2026. január 19. (Tegnapi adat a 2026-os kontextusban)
-      const dateStr = "20260119"; 
-
+    async function initBrandAPI() {
+      const teams = [{ n:'Arsenal', w:'Arsenal_F.C.' }, { n:'City', w:'Manchester_City_F.C.' }, { n:'Liverpool', w:'Liverpool_F.C.' }, { n:'United', w:'Manchester_United_F.C.' }, { n:'Chelsea', w:'Chelsea_F.C.' }, { n:'Spurs', w:'Tottenham_Hotspur_F.C.' }];
       try {
-        const requests = teams.map(t => 
-          fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/${t.wiki}/daily/${dateStr}/${dateStr}`)
-          .then(res => res.json())
-        );
-
-        const results = await Promise.all(requests);
-        const viewCounts = results.map(r => r.items[0].views);
-
+        const date = "20260119";
+        const reqs = teams.map(t => fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/${t.w}/daily/${date}/${date}`).then(r => r.json()));
+        const res = await Promise.all(reqs);
         new Chart(document.getElementById('apiChart'), {
-          type: 'bar',
+          type: 'polarArea',
           data: {
-            labels: teams.map(t => t.name),
-            datasets: [{
-              label: 'Wikipedia Pageviews (Yesterday)',
-              data: viewCounts,
-              backgroundColor: '#38bdf8',
-              borderRadius: 5
-            }]
+            labels: teams.map(t => t.n),
+            datasets: [{ data: res.map(r => r.items[0].views), backgroundColor: ['rgba(239, 68, 68, 0.5)', 'rgba(110, 231, 183, 0.5)', 'rgba(239, 68, 68, 0.5)', 'rgba(251, 191, 36, 0.5)', 'rgba(59, 130, 246, 0.5)', 'rgba(255, 255, 255, 0.5)'] }]
           },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              y: { beginAtZero: true, ticks: { color: '#e5e7eb' } },
-              x: { ticks: { color: '#e5e7eb' } }
-            },
-            plugins: {
-              legend: { display: false }
-            }
-          }
+          options: { responsive: true, maintainAspectRatio: false, scales: { r: { grid: { color: '#475569' }, ticks: { display: false } } } }
         });
-      } catch(e) {
-        console.error("Wikipedia API error:", e);
-      }
+      } catch(e) { console.error(e); }
     }
-    initBrandInterestAPI();
+    initBrandAPI();
 
     // --- Chart 5: Interactive Radar (Balanced Data) ---
     const squadData = { 
@@ -336,4 +301,5 @@
   </script>
 </body>
 </html>
+
 

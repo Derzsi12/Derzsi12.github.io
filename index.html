@@ -230,19 +230,57 @@
     });
 
     // --- Chart 4: Live API (GBP/EUR) ---
-    async function initApi() {
+   // --- Chart 4: Brand Popularity (Wikipedia Live API) ---
+    async function initBrandInterestAPI() {
+      const teams = [
+        { name: 'Arsenal', wiki: 'Arsenal_F.C.' },
+        { name: 'Man City', wiki: 'Manchester_City_F.C.' },
+        { name: 'Liverpool', wiki: 'Liverpool_F.C.' },
+        { name: 'Man Utd', wiki: 'Manchester_United_F.C.' },
+        { name: 'Chelsea', wiki: 'Chelsea_F.C.' },
+        { name: 'Tottenham', wiki: 'Tottenham_Hotspur_F.C.' }
+      ];
+
+      // Dátum beállítása: 2026. január 19. (Tegnapi adat a 2026-os kontextusban)
+      const dateStr = "20260119"; 
+
       try {
-        const res = await fetch('https://api.frankfurter.app/2026-01-10..2026-01-20?from=GBP&to=EUR');
-        const d = await res.json();
-        const dates = Object.keys(d.rates);
+        const requests = teams.map(t => 
+          fetch(`https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/all-agents/${t.wiki}/daily/${dateStr}/${dateStr}`)
+          .then(res => res.json())
+        );
+
+        const results = await Promise.all(requests);
+        const viewCounts = results.map(r => r.items[0].views);
+
         new Chart(document.getElementById('apiChart'), {
-          type: 'line',
-          data: { labels: dates, datasets: [{ label: '1 GBP to EUR', data: dates.map(dt => d.rates[dt].EUR), borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.1)', fill: true, tension: 0.3 }] },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } } }
+          type: 'bar',
+          data: {
+            labels: teams.map(t => t.name),
+            datasets: [{
+              label: 'Wikipedia Pageviews (Yesterday)',
+              data: viewCounts,
+              backgroundColor: '#38bdf8',
+              borderRadius: 5
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, ticks: { color: '#e5e7eb' } },
+              x: { ticks: { color: '#e5e7eb' } }
+            },
+            plugins: {
+              legend: { display: false }
+            }
+          }
         });
-      } catch(e) { console.warn("API load error"); }
+      } catch(e) {
+        console.error("Wikipedia API error:", e);
+      }
     }
-    initApi();
+    initBrandInterestAPI();
 
     // --- Chart 5: Interactive Radar (Balanced Data) ---
     const squadData = { 
@@ -298,3 +336,4 @@
   </script>
 </body>
 </html>
+

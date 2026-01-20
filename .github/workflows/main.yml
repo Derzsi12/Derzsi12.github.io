@@ -2,8 +2,8 @@ name: Daily Scraper Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Minden éjfélkor lefut
-  workflow_dispatch: # Kézi indítást is lehetővé tesz
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:

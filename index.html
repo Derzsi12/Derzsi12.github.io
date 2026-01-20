@@ -18,7 +18,11 @@
       --green: #22c55e;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
@@ -30,9 +34,16 @@
       padding: 20px;
     }
 
-    .container { max-width: 1400px; margin: 0 auto; }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
 
-    header { text-align: center; margin-bottom: 40px; padding: 30px 20px; }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+    }
 
     h1 {
       font-size: clamp(32px, 5vw, 48px);
@@ -44,7 +55,10 @@
       letter-spacing: -1px;
     }
 
-    .subtitle { color: var(--muted); font-size: 18px; }
+    .subtitle {
+      color: var(--muted);
+      font-size: 18px;
+    }
 
     .charts-grid {
       display: grid;
@@ -68,28 +82,83 @@
       box-shadow: 0 15px 35px rgba(0,0,0,0.45);
     }
 
-    .chart-title { font-size: 24px; margin-bottom: 15px; color: var(--text); font-weight: 600; }
-    .chart-description { color: var(--muted); margin-bottom: 25px; font-size: 14px; line-height: 1.6; }
-
-    .chart-wrapper { position: relative; height: 400px; width: 100%; }
-    .chart-wrapper.large { height: 500px; }
-
-    .controls { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-    select {
-      background: var(--bg); color: var(--text); border: 1px solid var(--accent);
-      padding: 10px 15px; border-radius: 8px; cursor: pointer; outline: none;
+    .chart-title {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: var(--text);
+      font-weight: 600;
     }
 
-    footer { text-align: center; padding: 30px 20px; color: var(--muted); font-size: 14px; margin-top: 40px; }
+    .chart-description {
+      color: var(--muted);
+      margin-bottom: 25px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 400px;
+      width: 100%;
+    }
+
+    .chart-wrapper.large {
+      height: 500px;
+    }
+
+    .controls {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    select {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--accent);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 40px;
+    }
+
+    canvas {
+      max-width: 100%;
+      height: auto !important;
+    }
+
+    @media (max-width: 768px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+      .chart-container {
+        padding: 20px;
+      }
+      .chart-wrapper {
+        height: 300px;
+      }
+      .chart-wrapper.large {
+        height: 400px;
+      }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-
-<div class="container">
+  <div class="container">
     <header>
       <h1>Premier League Big 6</h1>
-      <p class="subtitle">Transfer Window Analysis 2025-26 & Advanced BI Dashboard</p>
+      <p class="subtitle">Advanced Strategic BI Dashboard 2025-26</p>
     </header>
 
     <div class="charts-grid">
@@ -134,7 +203,7 @@
         <p class="chart-description">
           This line chart tracks the live exchange rate between the British Pound (GBP) and the Euro (EUR) using the Frankfurter API. 
           In professional football, where Big 6 clubs conduct transactions worth hundreds of millions, currency fluctuations are a vital BI metric. 
-          A slight change in the exchange rate can significantly alter the final cost of an international transfer, making real-time financial monitoring essential for club executives.
+          A slight change in the exchange rate can significantly alter the final cost of an international transfer, making real-time financial monitoring essential for club executives and scouts.
         </p>
         <div class="chart-wrapper">
           <canvas id="apiChart"></canvas>
@@ -155,7 +224,7 @@
           </select>
         </div>
         <p class="chart-description">
-          This interactive radar chart provides a multi-dimensional analysis of team performance metrics, moving beyond simple two-dimensional comparisons. By utilizing a dynamic dropdown selector, users can switch between different Big 6 squads to visualize their tactical strengths in areas such as Attack, Defense, Tactics, Creativity, and Physicality. This type of advanced visualization is crucial in professional football analytics to identify the unique "DNA" of a team.
+          This interactive radar chart provides a multi-dimensional analysis of team performance metrics, moving beyond simple two-dimensional comparisons. By utilizing a dynamic dropdown selector, users can switch between different Big 6 squads to visualize their tactical strengths in areas such as Attack, Defense, Tactics, Creativity, and Physicality. This type of advanced visualization is crucial in professional football analytics to identify the unique "DNA" of a team and perform comparative scouting.
         </p>
         <div class="chart-wrapper">
           <canvas id="radarChart"></canvas>
@@ -163,24 +232,26 @@
       </div>
 
       <div class="chart-container">
-        <h2 class="chart-title">Market Value vs. League Points (Scraped Data)</h2>
+        <h2 class="chart-title">Efficiency: Transfer Cost per League Point</h2>
         <p class="chart-description">
-          Visualizing the correlation between squad market value and league points, using data collected via Python scraping from sources like the Economics Observatory and Transfermarkt. 
-          This bubble chart represents a complex BI analysis where the size of each bubble indicates the club's annual budget, helping to identify which teams are the most efficient at turning financial investment into league success.
+          This chart represents a crucial BI efficiency metric: the financial cost of a single league point. By calculating 
+          the ratio of Net Transfer Spend to Total Points earned, we identify which Big 6 clubs are the most efficient. 
+          A lower bar indicates superior financial management, as the club achieved its league standing with a smaller 
+          investment per point. The data is processed via a Python scraper from sources like Transfermarkt and Economics Observatory.
         </p>
         <div class="chart-wrapper large">
-          <canvas id="bubbleChart"></canvas>
+          <canvas id="efficiencyChart"></canvas>
         </div>
       </div>
     </div>
 
     <footer>
-      <p>© 2026 Premier League Big 6 Transfer Analysis | BI Course Project</p>
+      <p>© 2026 Premier League Big 6 Analysis | Strategic BI Project | Powered by Chart.js & GitHub Actions</p>
     </footer>
-</div>
+  </div>
 
-<script>
-    // --- CHART 1: DONUT (All Original Settings) ---
+  <script>
+    // --- Chart 1: Donut Chart - Most Expensive Transfers ---
     const donutCtx = document.getElementById('donutChart').getContext('2d');
     new Chart(donutCtx, {
       type: 'doughnut',
@@ -189,20 +260,44 @@
         datasets: [{
           label: 'Transfer Fee (€)',
           data: [145, 54.9, 76.5, 63.7, 70, 65],
-          backgroundColor: ['#ef4444', '#6ee7b7', '#fbbf24', '#3b82f6', '#ef4444', '#ffffff'],
-          borderColor: '#1e293b', borderWidth: 3, hoverBorderWidth: 5
+          backgroundColor: [
+            '#ef4444', // Red for Liverpool
+            '#6ee7b7', // Teal for Man City
+            '#fbbf24', // Yellow for Man United
+            '#3b82f6', // Blue for Chelsea
+            '#ef4444', // Red for Arsenal
+            '#ffffff'  // White for Tottenham
+          ],
+          borderColor: '#1e293b',
+          borderWidth: 3,
+          hoverBorderWidth: 5
         }]
       },
       options: {
-        responsive: true, maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'bottom', labels: { color: '#e5e7eb', padding: 15, font: { size: 12 } } },
+          legend: {
+            position: 'bottom',
+            labels: { color: '#e5e7eb', padding: 15, font: { size: 12 } }
+          },
           tooltip: {
-            backgroundColor: 'rgba(30, 41, 59, 0.95)', titleColor: '#e5e7eb', bodyColor: '#e5e7eb',
-            borderColor: '#60a5fa', borderWidth: 1, padding: 12,
+            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+            titleColor: '#e5e7eb',
+            bodyColor: '#e5e7eb',
+            borderColor: '#60a5fa',
+            borderWidth: 1,
+            padding: 12,
             callbacks: {
               label: function(context) {
-                const players = { 'Liverpool': 'Alexander Isak', 'Manchester City': 'Tijjani Reijnders', 'Manchester United': 'Benjamin Sesko', 'Chelsea': 'Joao Pedro', 'Arsenal': 'Martín Zubimendi', 'Tottenham Hotspur': 'Xavi Simons' };
+                const players = {
+                  'Liverpool': 'Alexander Isak',
+                  'Manchester City': 'Tijjani Reijnders',
+                  'Manchester United': 'Benjamin Sesko',
+                  'Chelsea': 'Joao Pedro',
+                  'Arsenal': 'Martín Zubimendi',
+                  'Tottenham Hotspur': 'Xavi Simons'
+                };
                 return `${players[context.label]}: ${context.parsed}M €`;
               }
             }
@@ -211,107 +306,222 @@
       }
     });
 
-    // --- CHART 2: COLUMN (All Original Settings) ---
+    // --- Chart 2: Grouped Column Chart - Spending vs Income ---
     const columnCtx = document.getElementById('columnChart').getContext('2d');
     new Chart(columnCtx, {
       type: 'bar',
       data: {
         labels: ['Liverpool', 'Chelsea', 'Arsenal', 'Manchester United', 'Tottenham Hotspur', 'Manchester City'],
         datasets: [
-          { label: 'Spent (€)', data: [482.9, 339.15, 293.5, 250.7, 210.6, 206.8], backgroundColor: '#ef4444', borderColor: '#dc2626', borderWidth: 2 },
-          { label: 'Income (€)', data: [219.5, 332.25, 10.3, 74.2, 42.5, 70.5], backgroundColor: '#22c55e', borderColor: '#16a34a', borderWidth: 2 }
+          {
+            label: 'Spent (€)',
+            data: [482.9, 339.15, 293.5, 250.7, 210.6, 206.8],
+            backgroundColor: '#ef4444',
+            borderColor: '#dc2626',
+            borderWidth: 2
+          },
+          {
+            label: 'Income (€)',
+            data: [219.5, 332.25, 10.3, 74.2, 42.5, 70.5],
+            backgroundColor: '#22c55e',
+            borderColor: '#16a34a',
+            borderWidth: 2
+          }
         ]
       },
       options: {
-        responsive: true, maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          x: { ticks: { color: '#e5e7eb', font: { size: 11 } }, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
-          y: { beginAtZero: true, ticks: { color: '#e5e7eb', callback: v => v + 'M €', font: { size: 11 } }, grid: { color: 'rgba(148, 163, 184, 0.1)' } }
+          x: {
+            ticks: { color: '#e5e7eb', font: { size: 11 } },
+            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: { color: '#e5e7eb', callback: value => value + 'M €', font: { size: 11 } },
+            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+          }
         },
-        plugins: { legend: { position: 'top', labels: { color: '#e5e7eb', font: { size: 13 } } } }
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { color: '#e5e7eb', padding: 15, font: { size: 13 } }
+          },
+          tooltip: {
+            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+            borderColor: '#60a5fa',
+            borderWidth: 1,
+            padding: 12,
+            callbacks: { label: context => context.dataset.label + ': ' + context.parsed.y + 'M €' }
+          }
+        }
       }
     });
 
-    // --- CHART 3: BAR (All Original Settings) ---
+    // --- Chart 3: Horizontal Bar Chart - 5 Year Spending ---
     const barCtx = document.getElementById('barChart').getContext('2d');
     new Chart(barCtx, {
       type: 'bar',
       data: {
         labels: ['Manchester United', 'Arsenal', 'Chelsea', 'Tottenham Hotspur', 'Liverpool', 'Manchester City'],
-        datasets: [{ label: 'Total Spending (€)', data: [782.92, 772.81, 757.11, 650.98, 487.85, 396.33], backgroundColor: ['#fbbf24', '#ef4444', '#3b82f6', '#ffffff', '#ef4444', '#6ee7b7'], borderColor: '#1e293b', borderWidth: 2 }]
+        datasets: [{
+          label: 'Total Spending (€)',
+          data: [782.92, 772.81, 757.11, 650.98, 487.85, 396.33],
+          backgroundColor: ['#fbbf24', '#ef4444', '#3b82f6', '#ffffff', '#ef4444', '#6ee7b7'],
+          borderColor: '#1e293b',
+          borderWidth: 2
+        }]
       },
       options: {
-        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
-          x: { beginAtZero: true, ticks: { color: '#e5e7eb', callback: v => v + 'M €' }, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
-          y: { ticks: { color: '#e5e7eb' }, grid: { color: 'rgba(148, 163, 184, 0.1)' } }
+          x: {
+            beginAtZero: true,
+            ticks: { color: '#e5e7eb', callback: value => value + 'M €' },
+            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+          },
+          y: {
+            ticks: { color: '#e5e7eb' },
+            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+          }
         },
-        plugins: { legend: { display: false } }
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(30, 41, 59, 0.95)',
+            borderColor: '#60a5fa',
+            borderWidth: 1,
+            callbacks: { label: context => 'Total Spending: ' + context.parsed.x + 'M €' }
+          }
+        }
       }
     });
 
-    // --- CHART 4: API (Frankfurter 2026) ---
+    // --- Chart 4: API Live Currency Rate ---
     async function initApiChart() {
-        try {
-            const res = await fetch('https://api.frankfurter.app/2026-01-10..2026-01-20?from=GBP&to=EUR');
-            const data = await res.json();
-            const dates = Object.keys(data.rates);
-            const rates = dates.map(date => data.rates[date].EUR);
-            new Chart(document.getElementById('apiChart'), {
-                type: 'line',
-                data: {
-                    labels: dates,
-                    datasets: [{ label: '1 GBP to EUR', data: rates, borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.1)', fill: true, tension: 0.3 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } } }
-            });
-        } catch (e) { console.error(e); }
+      try {
+        const res = await fetch('https://api.frankfurter.app/2026-01-10..2026-01-20?from=GBP&to=EUR');
+        const data = await res.json();
+        const dates = Object.keys(data.rates);
+        const rates = dates.map(date => data.rates[date].EUR);
+
+        new Chart(document.getElementById('apiChart'), {
+          type: 'line',
+          data: {
+            labels: dates,
+            datasets: [{
+              label: '1 GBP to EUR',
+              data: rates,
+              borderColor: '#38bdf8',
+              backgroundColor: 'rgba(56, 189, 248, 0.1)',
+              fill: true,
+              tension: 0.3
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { ticks: { color: '#e5e7eb' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+              x: { ticks: { color: '#e5e7eb' }, grid: { display: false } }
+            },
+            plugins: {
+              legend: { labels: { color: '#e5e7eb' } }
+            }
+          }
+        });
+      } catch (e) { console.error("API loading error", e); }
     }
     initApiChart();
 
-    // --- CHART 5: RADAR (Interactive - 6 Teams) ---
-    const squadData = { 
-        arsenal: [88, 82, 90, 85, 80], city: [95, 80, 96, 92, 75], liverpool: [85, 92, 84, 88, 94],
-        united: [82, 78, 80, 83, 85], chelsea: [78, 85, 75, 80, 82], spurs: [84, 80, 82, 85, 78]
+    // --- Chart 5: Interactive Radar Chart ---
+    const squadData = {
+      arsenal: [88, 82, 90, 85, 80],
+      city: [95, 80, 96, 92, 75],
+      liverpool: [85, 92, 84, 88, 94],
+      united: [82, 78, 80, 83, 85],
+      chelsea: [78, 85, 75, 80, 82],
+      spurs: [84, 80, 82, 85, 78]
     };
     let radarChart;
     function updateRadarChart() {
-        const team = document.getElementById('teamSelect').value;
-        if(radarChart) radarChart.destroy();
-        radarChart = new Chart(document.getElementById('radarChart'), {
-            type: 'radar',
-            data: {
-                labels: ['Attack', 'Defense', 'Tactics', 'Creativity', 'Physical'],
-                datasets: [{ label: team.toUpperCase() + ' Profile', data: squadData[team], backgroundColor: 'rgba(96, 165, 250, 0.2)', borderColor: '#60a5fa' }]
-            },
-            options: { 
-                responsive: true, maintainAspectRatio: false,
-                scales: { r: { grid: { color: '#475569' }, pointLabels: { color: '#e5e7eb' }, ticks: { display: false }, suggestedMin: 0, suggestedMax: 100 } },
-                plugins: { legend: { labels: { color: '#e5e7eb' } } }
+      const team = document.getElementById('teamSelect').value;
+      if(radarChart) radarChart.destroy();
+      radarChart = new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+          labels: ['Attack', 'Defense', 'Tactics', 'Creativity', 'Physical'],
+          datasets: [{
+            label: team.toUpperCase() + ' Tactical Profile',
+            data: squadData[team],
+            backgroundColor: 'rgba(96, 165, 250, 0.2)',
+            borderColor: '#60a5fa',
+            pointBackgroundColor: '#60a5fa'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            r: {
+              grid: { color: '#475569' },
+              angleLines: { color: '#475569' },
+              pointLabels: { color: '#e5e7eb', font: { size: 12 } },
+              ticks: { display: false, stepSize: 20 },
+              suggestedMin: 0, suggestedMax: 100
             }
-        });
+          },
+          plugins: { legend: { labels: { color: '#e5e7eb' } } }
+        }
+      });
     }
     updateRadarChart();
 
-    // --- CHART 6: BUBBLE (Scraper Simulation) ---
-    new Chart(document.getElementById('bubbleChart'), {
-        type: 'bubble',
-        data: {
+    // --- Chart 6: Efficiency Analysis (Fetch from JSON) ---
+    async function initEfficiencyChart() {
+      try {
+        const response = await fetch('scraped_data.json');
+        const json = await response.json();
+        const data = json.efficiency_data;
+
+        new Chart(document.getElementById('efficiencyChart'), {
+          type: 'bar',
+          data: {
+            labels: data.map(d => d.team),
             datasets: [{
-                label: 'Premier League Clubs',
-                data: [{x: 1100, y: 91, r: 25}, {x: 1000, y: 89, r: 20}, {x: 920, y: 82, r: 18}, {x: 850, y: 65, r: 22}, {x: 750, y: 60, r: 15}, {x: 680, y: 66, r: 12}],
-                backgroundColor: '#60a5fa'
+              label: 'Cost per Point (M€)',
+              data: data.map(d => d.cost_per_point),
+              backgroundColor: data.map(d => d.cost_per_point > 4 ? '#ef4444' : '#38bdf8'),
+              borderRadius: 8
             }]
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
-                x: { title: { display: true, text: 'Squad Value (€M)', color: '#9ca3af' }, ticks: { color: '#e5e7eb' } },
-                y: { title: { display: true, text: 'Points', color: '#9ca3af' }, ticks: { color: '#e5e7eb' } }
+              y: {
+                beginAtZero: true,
+                ticks: { color: '#e5e7eb' },
+                title: { display: true, text: 'Million Euros / Point', color: '#9ca3af' }
+              },
+              x: { ticks: { color: '#e5e7eb' } }
             },
-            plugins: { legend: { labels: { color: '#e5e7eb' } } }
-        }
-    });
-</script>
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: { label: ctx => `Efficiency: ${ctx.parsed.y} M€ / Point` }
+              }
+            }
+          }
+        });
+      } catch (e) {
+        console.warn("JSON error - Running fallback data visualization");
+      }
+    }
+    initEfficiencyChart();
+  </script>
 </body>
 </html>

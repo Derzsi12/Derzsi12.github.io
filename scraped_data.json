@@ -1,0 +1,32 @@
+{
+    "metadata": {
+        "source": "Economics Observatory & Transfermarkt",
+        "last_updated": "2026-01-20 17:32:40"
+    },
+    "efficiency_data": [
+        {
+            "team": "Man City",
+            "cost_per_point": 1.49
+        },
+        {
+            "team": "Arsenal",
+            "cost_per_point": 3.17
+        },
+        {
+            "team": "Liverpool",
+            "cost_per_point": 3.2
+        },
+        {
+            "team": "Tottenham",
+            "cost_per_point": 2.54
+        },
+        {
+            "team": "Chelsea",
+            "cost_per_point": 5.1
+        },
+        {
+            "team": "Man Utd",
+            "cost_per_point": 4.16
+        }
+    ]
+}

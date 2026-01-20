@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premier League Big 6 - Strategic BI Dashboard</title>
+  <title>Premier League Big 6 - Elite Strategic BI Dashboard</title>
   <style>
     :root {
       --bg: #0f172a;
@@ -93,7 +93,7 @@
   <div class="container">
     <header>
       <h1>Premier League Big 6</h1>
-      <p class="subtitle">Strategic Business Intelligence Dashboard 2025-26</p>
+      <p class="subtitle">Advanced Strategic Business Intelligence Dashboard 2025-26</p>
     </header>
 
     <div class="charts-grid">
@@ -102,7 +102,7 @@
         <p class="chart-description">
           This donut chart displays the most expensive single transfer for each of the Big 6 teams during the 2025-26 season. 
           Hover over any segment to see the player's name and transfer fee. Liverpool leads with the highest transfer fee, 
-          followed by Manchester United and Arsenal.
+          followed by Manchester United and Arsenal. This visualization highlights the peak investment per club.
         </p>
         <div class="chart-wrapper"><canvas id="donutChart"></canvas></div>
       </div>
@@ -112,7 +112,7 @@
         <p class="chart-description">
           This grouped column chart compares the total spending (red bars) and income (green bars) for each team during 
           the 2025-26 transfer window. The chart reveals which teams had a net spending (spent more than earned) and which 
-          teams managed to balance their finances more effectively.
+          teams managed to balance their finances more effectively through player sales and acquisitions.
         </p>
         <div class="chart-wrapper large"><canvas id="columnChart"></canvas></div>
       </div>
@@ -122,7 +122,7 @@
         <p class="chart-description">
           This horizontal bar chart shows the cumulative spending of each Big 6 team over the past 5 years. 
           Manchester United and Arsenal have invested the most in player acquisitions, demonstrating their commitment 
-          to strengthening their squads over the long term.
+          to strengthening their squads over the long term and maintaining competitive dominance in the league.
         </p>
         <div class="chart-wrapper large"><canvas id="barChart"></canvas></div>
       </div>
@@ -131,8 +131,8 @@
         <h2 class="chart-title">Transfer Currency Volatility (Live API)</h2>
         <p class="chart-description">
           This line chart tracks the live exchange rate between the British Pound (GBP) and the Euro (EUR) using the Frankfurter API. 
-          In professional football, where Big 6 clubs conduct transactions worth hundreds of millions, currency fluctuations are a vital BI metric. 
-          A slight change in the exchange rate can significantly alter the final cost of an international transfer.
+          In professional football, currency fluctuations are a vital BI metric. A slight change in the exchange rate can 
+          significantly alter the final cost of an international transfer, making real-time financial monitoring essential for club executives.
         </p>
         <div class="chart-wrapper"><canvas id="apiChart"></canvas></div>
       </div>
@@ -151,9 +151,9 @@
           </select>
         </div>
         <p class="chart-description">
-          This interactive radar chart provides a multi-dimensional analysis of team performance metrics, moving beyond simple two-dimensional comparisons. 
-          By utilizing a dynamic dropdown selector, users can switch between different Big 6 squads to visualize their tactical strengths in areas such as 
-          Attack, Defense, Tactics, Creativity, and Physicality.
+          This interactive radar chart provides a multi-dimensional analysis of team performance metrics, moving beyond simple 
+          two-dimensional comparisons. By utilizing a dynamic dropdown selector, users can switch between different Big 6 squads 
+          to visualize their tactical strengths in areas such as Attack, Defense, Tactics, Creativity, and Physicality.
         </p>
         <div class="chart-wrapper"><canvas id="radarChart"></canvas></div>
       </div>
@@ -164,18 +164,18 @@
           This chart represents a crucial BI efficiency metric: the financial cost of a single league point. By calculating 
           (Net Transfer Spend / Total Points), we identify which Big 6 clubs are the most efficient. A lower bar indicates 
           superior management, as the club achieved its league standing with a smaller financial investment per point. 
-          Data collected via Python scraping from Transfermarkt.
+          Data is extracted via a Python scraper.
         </p>
         <div class="chart-wrapper large"><canvas id="efficiencyChart"></canvas></div>
       </div>
     </div>
 
-    <footer><p>© 2026 Premier League BI Project | Advanced Data Storytelling</p></footer>
+    <footer><p>© 2026 Premier League Big 6 BI | Elite Data Storytelling Project</p></footer>
   </div>
 
   <script>
-    // --- Chart 1, 2, 3 (Statikusok az eredeti beállításokkal) ---
-    new Chart(document.getElementById('donutChart'), {
+    // --- Chart 1: Donut ---
+    new Chart(document.getElementById('donutChart').getContext('2d'), {
       type: 'doughnut',
       data: {
         labels: ['Liverpool', 'Manchester City', 'Manchester United', 'Chelsea', 'Arsenal', 'Tottenham Hotspur'],
@@ -185,31 +185,53 @@
           borderColor: '#1e293b', borderWidth: 3
         }]
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#e5e7eb' } } } }
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#e5e7eb', font: { size: 12 } } },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                const p = { 'Liverpool': 'Alexander Isak', 'Manchester City': 'Tijjani Reijnders', 'Manchester United': 'Benjamin Sesko', 'Chelsea': 'Joao Pedro', 'Arsenal': 'Martín Zubimendi', 'Tottenham Hotspur': 'Xavi Simons' };
+                return `${p[ctx.label]}: ${ctx.parsed}M €`;
+              }
+            }
+          }
+        }
+      }
     });
 
-    new Chart(document.getElementById('columnChart'), {
+    // --- Chart 2: Column ---
+    new Chart(document.getElementById('columnChart').getContext('2d'), {
       type: 'bar',
       data: {
         labels: ['Liverpool', 'Chelsea', 'Arsenal', 'United', 'Spurs', 'City'],
         datasets: [
-          { label: 'Spent', data: [482.9, 339.15, 293.5, 250.7, 210.6, 206.8], backgroundColor: '#ef4444' },
-          { label: 'Income', data: [219.5, 332.25, 10.3, 74.2, 42.5, 70.5], backgroundColor: '#22c55e' }
+          { label: 'Spent (€)', data: [482.9, 339.15, 293.5, 250.7, 210.6, 206.8], backgroundColor: '#ef4444' },
+          { label: 'Income (€)', data: [219.5, 332.25, 10.3, 74.2, 42.5, 70.5], backgroundColor: '#22c55e' }
         ]
       },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } } }
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          y: { ticks: { color: '#e5e7eb', callback: v => v + 'M €' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+          x: { ticks: { color: '#e5e7eb' } }
+        },
+        plugins: { legend: { labels: { color: '#e5e7eb' } } }
+      }
     });
 
-    new Chart(document.getElementById('barChart'), {
+    // --- Chart 3: Horizontal Bar ---
+    new Chart(document.getElementById('barChart').getContext('2d'), {
       type: 'bar',
       data: {
-        labels: ['United', 'Arsenal', 'Chelsea', 'Spurs', 'Liverpool', 'City'],
-        datasets: [{ label: 'M €', data: [782.92, 772.81, 757.11, 650.98, 487.85, 396.33], backgroundColor: ['#fbbf24', '#ef4444', '#3b82f6', '#ffffff', '#ef4444', '#6ee7b7'] }]
+        labels: ['Manchester United', 'Arsenal', 'Chelsea', 'Tottenham Hotspur', 'Liverpool', 'Manchester City'],
+        datasets: [{ label: 'Total Spending (€)', data: [782.92, 772.81, 757.11, 650.98, 487.85, 396.33], backgroundColor: ['#fbbf24', '#ef4444', '#3b82f6', '#ffffff', '#ef4444', '#6ee7b7'] }]
       },
       options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#e5e7eb' } }, y: { ticks: { color: '#e5e7eb' } } } }
     });
 
-    // --- Chart 4: Live API ---
+    // --- Chart 4: Live API (GBP/EUR) ---
     async function initApi() {
       try {
         const res = await fetch('https://api.frankfurter.app/2026-01-10..2026-01-20?from=GBP&to=EUR');
@@ -217,10 +239,10 @@
         const dates = Object.keys(d.rates);
         new Chart(document.getElementById('apiChart'), {
           type: 'line',
-          data: { labels: dates, datasets: [{ label: '1 GBP to EUR', data: dates.map(dt => d.rates[dt].EUR), borderColor: '#38bdf8', tension: 0.3 }] },
+          data: { labels: dates, datasets: [{ label: '1 GBP to EUR', data: dates.map(dt => d.rates[dt].EUR), borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.1)', fill: true, tension: 0.3 }] },
           options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } } }
         });
-      } catch(e) { console.log(e); }
+      } catch(e) { console.warn("API load error"); }
     }
     initApi();
 
@@ -234,31 +256,28 @@
         type: 'radar',
         data: {
           labels: ['Attack', 'Defense', 'Tactics', 'Creativity', 'Physical'],
-          datasets: [{ label: team.toUpperCase(), data: squadData[team], backgroundColor: 'rgba(96, 165, 250, 0.2)', borderColor: '#60a5fa' }]
+          datasets: [{ label: team.toUpperCase() + ' Technical Profile', data: squadData[team], backgroundColor: 'rgba(96, 165, 250, 0.2)', borderColor: '#60a5fa' }]
         },
-        options: { responsive: true, maintainAspectRatio: false, scales: { r: { grid: { color: '#475569' }, pointLabels: { color: '#e5e7eb' }, ticks: { display: false } } } }
+        options: { responsive: true, maintainAspectRatio: false, scales: { r: { grid: { color: '#475569' }, pointLabels: { color: '#e5e7eb', font: { size: 12 } }, ticks: { display: false }, suggestedMin: 0, suggestedMax: 100 } } }
       });
     }
     updateRadarChart();
 
-    // --- Chart 6: Efficiency (With Fallback) ---
+    // --- Chart 6: Scraper Efficiency (Direct Load) ---
     async function initEfficiency() {
-      let data = [{team: "City", cost: 1.49}, {team: "Arsenal", cost: 3.17}, {team: "LIV", cost: 3.2}, {team: "Spurs", cost: 2.54}, {team: "Chelsea", cost: 5.1}, {team: "United", cost: 4.16}];
       try {
         const res = await fetch('scraped_data.json');
-        if(res.ok) {
-          const j = await res.json();
-          data = j.efficiency_data.map(d => ({team: d.team, cost: d.cost_per_point}));
-        }
-      } catch(e) {}
-      new Chart(document.getElementById('efficiencyChart'), {
-        type: 'bar',
-        data: {
-          labels: data.map(d => d.team),
-          datasets: [{ label: 'M€ / Point', data: data.map(d => d.cost), backgroundColor: data.map(d => d.cost > 4 ? '#ef4444' : '#38bdf8') }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } }, plugins: { legend: { display: false } } }
-      });
+        const j = await res.json();
+        const data = j.efficiency_data;
+        new Chart(document.getElementById('efficiencyChart'), {
+          type: 'bar',
+          data: {
+            labels: data.map(d => d.team),
+            datasets: [{ label: 'M€ / Point', data: data.map(d => d.cost_per_point), backgroundColor: data.map(d => d.cost_per_point > 4 ? '#ef4444' : '#38bdf8'), borderRadius: 8 }]
+          },
+          options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } }, plugins: { legend: { display: false } } }
+        });
+      } catch(e) { console.warn("Waiting for scraped_data.json..."); }
     }
     initEfficiency();
   </script>

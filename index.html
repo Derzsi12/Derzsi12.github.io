@@ -81,6 +81,11 @@
     }
 
     footer { text-align: center; padding: 30px 20px; color: var(--muted); font-size: 14px; margin-top: 40px; }
+
+    @media (max-width: 768px) {
+      .charts-grid { grid-template-columns: 1fr; }
+      .chart-wrapper { height: 300px; }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
@@ -88,7 +93,7 @@
   <div class="container">
     <header>
       <h1>Premier League Big 6</h1>
-      <p class="subtitle">Ultimate Strategic Business Intelligence Dashboard 2025-26</p>
+      <p class="subtitle">Advanced Strategic Business Intelligence Dashboard 2025-26</p>
     </header>
 
     <div class="charts-grid">
@@ -97,7 +102,7 @@
         <p class="chart-description">
           This donut chart displays the most expensive single transfer for each of the Big 6 teams during the 2025-26 season. 
           Hover over any segment to see the player's name and transfer fee. Liverpool leads with the highest transfer fee, 
-          followed by Manchester United and Arsenal. This reflects the premium cost of acquiring world-class talent in the current market.
+          followed by Manchester United and Arsenal. This visualization highlights the peak individual investment per club.
         </p>
         <div class="chart-wrapper"><canvas id="donutChart"></canvas></div>
       </div>
@@ -106,8 +111,8 @@
         <h2 class="chart-title">Transfer Window Spending vs Income (2025-26)</h2>
         <p class="chart-description">
           This grouped column chart compares the total spending (red bars) and income (green bars) for each team during 
-          the 2025-26 transfer window. The chart reveals which teams had a significant net spending and which managed 
-          to offset their acquisitions through strategic player sales to maintain financial sustainability.
+          the 2025-26 transfer window. The chart reveals which teams had a net spending and which managed to balance 
+          their finances effectively through strategic player sales and targeted acquisitions.
         </p>
         <div class="chart-wrapper large"><canvas id="columnChart"></canvas></div>
       </div>
@@ -116,8 +121,8 @@
         <h2 class="chart-title">Total Spending Over 5 Years</h2>
         <p class="chart-description">
           This horizontal bar chart shows the cumulative spending of each Big 6 team over the past 5 years. 
-          The data demonstrates long-term financial commitment to squad depth, with clubs like Manchester United 
-          and Arsenal leading the investment charts to maintain their position at the top of European football.
+          Manchester United and Arsenal have invested the most in player acquisitions, demonstrating their long-term 
+          financial commitment to strengthening their squads and maintaining competitive dominance.
         </p>
         <div class="chart-wrapper large"><canvas id="barChart"></canvas></div>
       </div>
@@ -126,14 +131,14 @@
         <h2 class="chart-title">Transfer Currency Volatility (Live API)</h2>
         <p class="chart-description">
           This line chart tracks the live exchange rate between the British Pound (GBP) and the Euro (EUR) using the Frankfurter API. 
-          For Business Intelligence in sports, currency fluctuations are a critical risk factor, as they can alter the multi-million 
-          Euro cost of international player contracts within days of a deal being agreed upon.
+          In professional football, where Big 6 clubs conduct transactions worth hundreds of millions, currency fluctuations 
+          are a vital BI metric. A slight change in the exchange rate can significantly alter the final cost of an international transfer.
         </p>
         <div class="chart-wrapper"><canvas id="apiChart"></canvas></div>
       </div>
 
       <div class="chart-container">
-        <h2 class="chart-title">Interactive Squad Tactical Profile</h2>
+        <h2 class="chart-title">Interactive Squad Technical Profile</h2>
         <div class="controls">
           <label for="teamSelect">Select Team Analysis:</label>
           <select id="teamSelect" onchange="updateRadarChart()">
@@ -146,30 +151,30 @@
           </select>
         </div>
         <p class="chart-description">
-          This interactive radar chart provides a balanced multi-dimensional analysis of tactical performance. 
-          The data points reflect elite-level professional standards (70-95 scale), focusing on stylistic differences 
-          such as build-up tactics, defensive solidity, and physical pressing rather than exaggerated disparities.
+          This interactive radar chart provides a multi-dimensional analysis of team performance metrics. 
+          Using realistic technical standards (70-95 scale), users can visualize tactical strengths in areas such as 
+          Attack, Defense, Tactics, Physicality, and Creativity. This allows for an elite-level technical assessment.
         </p>
         <div class="chart-wrapper"><canvas id="radarChart"></canvas></div>
       </div>
 
       <div class="chart-container">
-        <h2 class="chart-title">Efficiency: Net Spend per League Point</h2>
+        <h2 class="chart-title">Big 6 Head-to-Head Mini League</h2>
         <p class="chart-description">
-          A crucial BI metric evaluating the financial cost of a single league point. By calculating 
-          (Net Transfer Spend / Total Points), we determine which management structures are the most efficient. 
-          This visualization uses data extracted via Python scraper to identify the true Return on Investment (ROI) of transfer activities.
+          This chart represents the "Big 6 Mini-League" standings, focusing exclusively on matches played between the six 
+          top-tier clubs. By filtering only these high-pressure encounters, we identify which squad performs best against elite 
+          rivals. The data is processed directly from a raw dataset using a Python analysis script.
         </p>
         <div class="chart-wrapper large"><canvas id="efficiencyChart"></canvas></div>
       </div>
     </div>
 
-    <footer><p>© 2026 Premier League Big 6 BI | Strategic Data Analysis Project</p></footer>
+    <footer><p>© 2026 Premier League Big 6 BI | Elite Data Analysis Project</p></footer>
   </div>
 
   <script>
-    // --- Chart 1, 2, 3 (Original Data) ---
-    new Chart(document.getElementById('donutChart').getContext('2d'), {
+    // --- Chart 1: Donut ---
+    new Chart(document.getElementById('donutChart'), {
       type: 'doughnut',
       data: {
         labels: ['Liverpool', 'Manchester City', 'Manchester United', 'Chelsea', 'Arsenal', 'Tottenham Hotspur'],
@@ -179,31 +184,52 @@
           borderColor: '#1e293b', borderWidth: 3
         }]
       },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#e5e7eb' } } } }
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#e5e7eb' } },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                const players = { 'Liverpool': 'Alexander Isak', 'Manchester City': 'Tijjani Reijnders', 'Manchester United': 'Benjamin Sesko', 'Chelsea': 'Joao Pedro', 'Arsenal': 'Martín Zubimendi', 'Tottenham Hotspur': 'Xavi Simons' };
+                return `${players[ctx.label]}: ${ctx.parsed}M €`;
+              }
+            }
+          }
+        }
+      }
     });
 
-    new Chart(document.getElementById('columnChart').getContext('2d'), {
+    // --- Chart 2: Grouped Column ---
+    new Chart(document.getElementById('columnChart'), {
       type: 'bar',
       data: {
         labels: ['Liverpool', 'Chelsea', 'Arsenal', 'United', 'Spurs', 'City'],
         datasets: [
-          { label: 'Spent', data: [482.9, 339.15, 293.5, 250.7, 210.6, 206.8], backgroundColor: '#ef4444' },
-          { label: 'Income', data: [219.5, 332.25, 10.3, 74.2, 42.5, 70.5], backgroundColor: '#22c55e' }
+          { label: 'Spent (€)', data: [482.9, 339.15, 293.5, 250.7, 210.6, 206.8], backgroundColor: '#ef4444' },
+          { label: 'Income (€)', data: [219.5, 332.25, 10.3, 74.2, 42.5, 70.5], backgroundColor: '#22c55e' }
         ]
       },
-      options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } } }
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          y: { ticks: { color: '#e5e7eb' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+          x: { ticks: { color: '#e5e7eb' } }
+        }
+      }
     });
 
+    // --- Chart 3: Horizontal Bar ---
     new Chart(document.getElementById('barChart'), {
       type: 'bar',
       data: {
-        labels: ['United', 'Arsenal', 'Chelsea', 'Spurs', 'Liverpool', 'City'],
-        datasets: [{ label: 'M €', data: [782.92, 772.81, 757.11, 650.98, 487.85, 396.33], backgroundColor: '#fbbf24' }]
+        labels: ['Manchester United', 'Arsenal', 'Chelsea', 'Tottenham Hotspur', 'Liverpool', 'Manchester City'],
+        datasets: [{ label: 'Total Spending (€)', data: [782.92, 772.81, 757.11, 650.98, 487.85, 396.33], backgroundColor: ['#fbbf24', '#ef4444', '#3b82f6', '#ffffff', '#ef4444', '#6ee7b7'] }]
       },
-      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#e5e7eb' } } } }
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { color: '#e5e7eb' } }, y: { ticks: { color: '#e5e7eb' } } } }
     });
 
-    // --- Chart 4: API ---
+    // --- Chart 4: Live API (GBP/EUR) ---
     async function initApi() {
       try {
         const res = await fetch('https://api.frankfurter.app/2026-01-10..2026-01-20?from=GBP&to=EUR');
@@ -211,22 +237,21 @@
         const dates = Object.keys(d.rates);
         new Chart(document.getElementById('apiChart'), {
           type: 'line',
-          data: { labels: dates, datasets: [{ label: '1 GBP to EUR', data: dates.map(dt => d.rates[dt].EUR), borderColor: '#38bdf8', fill: false, tension: 0.3 }] },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } } } }
+          data: { labels: dates, datasets: [{ label: '1 GBP to EUR', data: dates.map(dt => d.rates[dt].EUR), borderColor: '#38bdf8', backgroundColor: 'rgba(56, 189, 248, 0.1)', fill: true, tension: 0.3 }] },
+          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } }, x: { ticks: { color: '#e5e7eb' } } } }
         });
-      } catch(e) { console.warn("API error"); }
+      } catch(e) { console.warn("API load error"); }
     }
     initApi();
 
-    // --- Chart 5: BALANCED RADAR (Reális adatok) ---
-    // Statisztikák finomítva: 70-95 közötti tartomány a hitelesség érdekében
+    // --- Chart 5: Interactive Radar (Balanced Data) ---
     const squadData = { 
-        arsenal: [90, 85, 94, 88, 86],      // Erős taktika és belföldi dominancia
-        city: [95, 84, 98, 92, 80],         // Csúcs taktika és támadás, kevesebb fizikai harc
-        liverpool: [88, 90, 82, 95, 94],    // Csúcs fizikai és letámadás (Physical/Creativity)
-        united: [84, 82, 80, 85, 88],       // Kiegyensúlyozott, de építkezésben picit gyengébb
-        chelsea: [80, 88, 78, 84, 86],      // Erős védekezés és fizikum
-        spurs: [86, 78, 84, 86, 90]         // Erős kreativitás és támadás
+        arsenal: [90, 85, 94, 88, 86],
+        city: [95, 84, 98, 92, 80],
+        liverpool: [88, 90, 82, 95, 94],
+        united: [84, 82, 80, 85, 88],
+        chelsea: [80, 88, 78, 84, 86],
+        spurs: [86, 78, 84, 86, 90]
     };
     let radar;
     function updateRadarChart() {
@@ -240,26 +265,36 @@
         },
         options: { 
           responsive: true, maintainAspectRatio: false, 
-          scales: { r: { grid: { color: '#475569' }, pointLabels: { color: '#e5e7eb', font: { size: 12 } }, ticks: { display: false }, suggestedMin: 50, suggestedMax: 100 } } 
+          scales: { r: { grid: { color: '#475569' }, pointLabels: { color: '#e5e7eb' }, ticks: { display: false }, suggestedMin: 50, suggestedMax: 100 } } 
         }
       });
     }
     updateRadarChart();
 
-    // --- Chart 6: Scraper Data ---
-    async function initEfficiency() {
+    // --- Chart 6: Mini-League (Fetch from scraped_data.json) ---
+    async function initMiniLeague() {
       try {
         const res = await fetch('scraped_data.json');
         const j = await res.json();
-        const d = j.efficiency_data;
+        const data = j.minileague;
         new Chart(document.getElementById('efficiencyChart'), {
           type: 'bar',
-          data: { labels: d.map(x => x.team), datasets: [{ label: 'M€ / Point', data: d.map(x => x.cost), backgroundColor: d.map(x => x.cost > 4 ? '#ef4444' : '#38bdf8') }] },
-          options: { responsive: true, maintainAspectRatio: false, scales: { y: { ticks: { color: '#e5e7eb' } } }, plugins: { legend: { display: false } } }
+          data: {
+            labels: data.map(d => d.team),
+            datasets: [{ label: 'Head-to-Head Points', data: data.map(d => d.points), backgroundColor: '#60a5fa', borderRadius: 8 }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            scales: {
+              y: { beginAtZero: true, ticks: { color: '#e5e7eb' }, title: { display: true, text: 'Total Points', color: '#9ca3af' } },
+              x: { ticks: { color: '#e5e7eb' } }
+            },
+            plugins: { legend: { display: false } }
+          }
         });
-      } catch(e) { console.warn("Waiting for JSON..."); }
+      } catch(e) { console.warn("Waiting for scraped_data.json..."); }
     }
-    initEfficiency();
+    initMiniLeague();
   </script>
 </body>
 </html>
